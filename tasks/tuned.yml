@@ -1,0 +1,29 @@
+- block:
+    - name: check rsyslog configuration
+      command: service tuned status
+      register: tuned_status_check
+      changed_when: no
+
+    - name: start tuned daemon service
+      service:
+        name: tuned
+        state: started
+        enabled: yes
+      when: >-
+        ( optimization_tuned_activate )
+        and ( not tuned_status_check.stdout is search("active (running)")
+              or tuned_status_check.stdout is search("disabled;"))
+
+    - name: register tuned active profile
+      command: tuned-adm active
+      regiter: tuned_check_profile
+      changed_when: no
+
+    - name: activate tuned selected profile
+      command: tuned-adm profile "{{ optimizations_tuned_profile }}"
+      when: >-
+        ( optimization_tuned_activate )
+        and ( not tuned_check_profile.stdout is search("{{ optimizations_tuned_profile }}"))
+  tags:
+    - role::optimizations
+    - role::optimizations::tuned

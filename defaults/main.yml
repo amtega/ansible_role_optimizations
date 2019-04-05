@@ -1,2 +1,35 @@
 ---
 # Role default lower priority variables
+optimization_tuned_activate: yes
+optimizations_tuned_profile: virtual-guest
+
+optimization_memory: yes
+optimization_disk: yes
+
+optimization_memory_vars:
+  - name: memory sysctl optimizations
+    options:
+      - name: vm.swappiness
+        value: 30
+      - name: vm.vfs_cache_pressure
+        value: 60
+      - name: vm.dirty_ratio
+        value: 25
+      - name: vm.dirty_background_ratio
+        value: 20
+      - name: vm.panic_on_oom
+        value: 1
+
+optimization_disk_vars:
+  - name: disk sysctl optimizations
+    options:
+      - name: vm.dirty_writeback_centisecs
+        value: 10000
+
+sysctl_memory_optimization: >-
+  {{ (optimization_memory) |
+      ternary(optimization_memory_vars | default([]) | flatten, []) }}
+
+sysctl_disk_optimization: >-
+  {{ (optimization_disk) |
+      ternary(optimization_disk_vars | default([]) | flatten, []) }}
