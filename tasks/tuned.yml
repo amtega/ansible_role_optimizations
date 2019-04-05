@@ -23,7 +23,7 @@
       command: tuned-adm profile "{{ optimizations_tuned_profile }}"
       when: >-
         ( optimization_tuned_activate )
-        and ( not tuned_check_profile.stdout is search("{{ optimizations_tuned_profile }}"))
+        and not tuned_check_profile.stdout is search("{{ optimizations_tuned_profile }}")
   tags:
     - role::optimizations
     - role::optimizations::tuned
