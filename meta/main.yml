@@ -36,30 +36,32 @@ dependencies:
     vars:
       sysctl:
         - name: memory sysctl optimizations
+          path: /etc/sysctl.d/90-memory_otimizations.conf
           options:
             - name: vm.swappiness
-              value: "{{ optimizations.sysctl.swappiness }}"
+              value: "{{ optimizations_sysctl_swappiness }}"
             - name: vm.vfs_cache_pressure
-              value: "{{ optimizations.sysctl.vfs_cache_pressure }}"
+              value: "{{ optimizations_sysctl_vfs_cache_pressure }}"
             - name: vm.dirty_ratio
-              value: "{{ optimizations.sysctl.dirty_ratio }}"
+              value: "{{ optimizations_sysctl_dirty_ratio }}"
             - name: vm.dirty_background_ratio
-              value: "{{ optimizations.sysctl.dirty_background_ratio }}"
+              value: "{{ optimizations_sysctl_dirty_background_ratio }}"
             - name: vm.panic_on_oom
-              value: "{{ optimizations.sysctl.panic_on_oom }}"
+              value: "{{ optimizations_sysctl_panic_on_oom }}"
       sysctl_options_defaults:
         state: present
-        reload: yes
+        reload: no
     when: optimization_memory
 
   - role: amtega.sysctl
     vars:
       sysctl:
         - name: disk sysctl optimizations
+          path: /etc/sysctl.d/91-disk_otimizations.conf
           options:
             - name: vm.dirty_writeback_centisecs
-              value: "{{ optimizations.sysctl.dirty_writeback_centisecs }}"
+              value: "{{ optimizations_sysctl_dirty_writeback_centisecs }}"
       sysctl_options_defaults:
         state: present
-        reload: yes
+        reload: no
     when: optimization_disk

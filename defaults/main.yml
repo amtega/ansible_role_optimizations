@@ -1,17 +1,17 @@
 ---
 # Role default lower priority variables
 optimization_tuned_activate: yes
-optimizations_tuned_profile: virtual-guest
+optimizations_tuned_profile: throughput-performance
 
 optimization_memory: yes
 optimization_disk: yes
 
 #Sysctl default values for memory optimization
-optimizations.sysctl.swappiness: 30
-optimizations.sysctl.vfs_cache_pressure: 60
-optimizations.sysctl.dirty_ratio: 25
-optimizations.sysctl.dirty_background_ratio: 20
-optimizations.sysctl.panic_on_oom: 1
+optimizations_sysctl_swappiness: 30
+optimizations_sysctl_vfs_cache_pressure: 60
+optimizations_sysctl_dirty_ratio: 25
+optimizations_sysctl_dirty_background_ratio: 20
+optimizations_sysctl_panic_on_oom: 1
 
 #Sysctl default values for disk optimization
-optimizations.sysctl.dirty_writeback_centisecs: 10000
+optimizations_sysctl_dirty_writeback_centisecs: 10000

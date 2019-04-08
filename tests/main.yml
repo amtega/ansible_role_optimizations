@@ -1,7 +1,6 @@
 ---
 # Tasks for testing role
----
-# Tasks for testing role
+
 - name: run idempotence test
   hosts: localhost
   roles:
@@ -21,14 +20,15 @@
   hosts: docker_sandbox_containers
   vars:
   roles:
-    - amtega.optimizations
+    - role: amtega.optimizations
+      vars:
   tasks:
-    - name: check rsyslog configuration
+    - name: check tuned test configuration
       command: tuned-adm active
       register: tuned_test_check
       changed_when: no
       failed_when: >-
-        not tuned_test_check.stdout is search("{{ optimizations_tuned_profile }}")
+        not tuned_test_check.stdout is search(optimizations_tuned_profile)
   tags:
     - idempotence
 
