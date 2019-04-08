@@ -6,30 +6,12 @@ optimizations_tuned_profile: virtual-guest
 optimization_memory: yes
 optimization_disk: yes
 
-optimization_memory_vars:
-  - name: memory sysctl optimizations
-    options:
-      - name: vm.swappiness
-        value: 30
-      - name: vm.vfs_cache_pressure
-        value: 60
-      - name: vm.dirty_ratio
-        value: 25
-      - name: vm.dirty_background_ratio
-        value: 20
-      - name: vm.panic_on_oom
-        value: 1
+#Sysctl default values for memory optimization
+optimizations.sysctl.swappiness: 30
+optimizations.sysctl.vfs_cache_pressure: 60
+optimizations.sysctl.dirty_ratio: 25
+optimizations.sysctl.dirty_background_ratio: 20
+optimizations.sysctl.panic_on_oom: 1
 
-optimization_disk_vars:
-  - name: disk sysctl optimizations
-    options:
-      - name: vm.dirty_writeback_centisecs
-        value: 10000
-
-sysctl_memory_optimization: >-
-  {{ (optimization_memory) |
-      ternary(optimization_memory_vars | default([]) | flatten, []) }}
-
-sysctl_disk_optimization: >-
-  {{ (optimization_disk) |
-      ternary(optimization_disk_vars | default([]) | flatten, []) }}
+#Sysctl default values for disk optimization
+optimizations.sysctl.dirty_writeback_centisecs: 10000

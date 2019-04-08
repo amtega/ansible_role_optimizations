@@ -1,5 +1,0 @@
-- block:
-
-  tags:
-    - role::optimizations
-    - role::optimizations::disk

@@ -20,10 +20,11 @@ galaxy_info:
 
 dependencies:
   - role: amtega.check_platform
-    check_platform_distributions:
-      centos: 6
-      fedora: 27
-      rhel: 6
+    vars:
+      check_platform_distributions:
+        centos: 6
+        fedora: 27
+        rhel: 6
 
   - role: amtega.packages
     packages_os:
@@ -32,7 +33,33 @@ dependencies:
           tuned: present
 
   - role: amtega.sysctl
-    sysctl_load_from_hostvars: yes
-    sysctl_options_defaults:
-      state: present
-      reload: yes
+    vars:
+      sysctl:
+        - name: memory sysctl optimizations
+          options:
+            - name: vm.swappiness
+              value: "{{ optimizations.sysctl.swappiness }}"
+            - name: vm.vfs_cache_pressure
+              value: "{{ optimizations.sysctl.vfs_cache_pressure }}"
+            - name: vm.dirty_ratio
+              value: "{{ optimizations.sysctl.dirty_ratio }}"
+            - name: vm.dirty_background_ratio
+              value: "{{ optimizations.sysctl.dirty_background_ratio }}"
+            - name: vm.panic_on_oom
+              value: "{{ optimizations.sysctl.panic_on_oom }}"
+      sysctl_options_defaults:
+        state: present
+        reload: yes
+    when: optimization_memory
+
+  - role: amtega.sysctl
+    vars:
+      sysctl:
+        - name: disk sysctl optimizations
+          options:
+            - name: vm.dirty_writeback_centisecs
+              value: "{{ optimizations.sysctl.dirty_writeback_centisecs }}"
+      sysctl_options_defaults:
+        state: present
+        reload: yes
+    when: optimization_disk

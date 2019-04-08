@@ -1,2 +1,42 @@
 ---
 # Tasks for testing role
+---
+# Tasks for testing role
+- name: run idempotence test
+  hosts: localhost
+  roles:
+    - role: amtega.docker_presets
+      docker_presets_images_json_query: >-
+        [? starts_with(name, `centos-6`)
+           || starts_with(name, `centos-7`)
+           || starts_with(name, `fedora-27`)
+           || starts_with(name, `fedora-28`) ]
+
+    - role: amtega.docker_sandbox
+      docker_sandbox_state: started
+  tags:
+    - sandbox
+
+- name: test su role with defaults
+  hosts: docker_sandbox_containers
+  vars:
+  roles:
+    - amtega.optimizations
+  tasks:
+    - name: check rsyslog configuration
+      command: tuned-adm active
+      register: tuned_test_check
+      changed_when: no
+      failed_when: >-
+        not tuned_test_check.stdout is search("{{ optimizations_tuned_profile }}")
+  tags:
+    - idempotence
+
+- name: cleanup docker docker sandbox
+  hosts: localhost
+  roles:
+    - role: amtega.docker_sandbox
+      docker_sandbox_state: absent
+  tags:
+    - cleanup
+    - sandbox
