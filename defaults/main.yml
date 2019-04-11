@@ -5,13 +5,28 @@ optimizations_tuned_profile: throughput-performance
 
 optimization_memory: yes
 optimization_disk: yes
+optimization_nfs: yes
+
+#Module options for nfs optimization
+optimizations_nfs_module:
+  - udp_slot_table_entries=64
+  - tcp_slot_table_entries=128
+  - tcp_max_slot_table_entries=128
 
 #Sysctl default values for memory optimization
-optimizations_sysctl_swappiness: 30
-optimizations_sysctl_vfs_cache_pressure: 60
-optimizations_sysctl_dirty_ratio: 25
-optimizations_sysctl_dirty_background_ratio: 20
-optimizations_sysctl_panic_on_oom: 1
+optimizations_sysctl_memory:
+  - name: vm.swappiness
+    value: 30
+  - name: vm.vfs_cache_pressure
+    value: 60
+  - name: vm.dirty_ratio
+    value: 25
+  - name: vm.dirty_background_ratio
+    value: 20
+  - name: vm.panic_on_oom
+    value: 1
 
 #Sysctl default values for disk optimization
-optimizations_sysctl_dirty_writeback_centisecs: 10000
+optimizations_sysctl_disk:
+  - name: vm.dirty_writeback_centisecs
+    value: 10000
