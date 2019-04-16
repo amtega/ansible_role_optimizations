@@ -1,23 +1,28 @@
 ---
 # Tasks for testing role
 
-- name: run idempotence test
+- name: Configure vagrant sandbox environment
   hosts: localhost
   roles:
-    - role: amtega.docker_presets
-      docker_presets_images_json_query: >-
+    - role: amtega.vagrant_presets
+      vagrant_presets_boxes_json_query: >-
         [? starts_with(name, `centos-6`)
            || starts_with(name, `centos-7`)
            || starts_with(name, `fedora-27`)
            || starts_with(name, `fedora-28`) ]
+  tags:
+    - sandbox
 
-    - role: amtega.docker_sandbox
-      docker_sandbox_state: started
+- name: Run idempotence test
+  hosts: localhost
+  roles:
+    - role: amtega.vagrant_sandbox
+      vagrant_sandbox_state: started
   tags:
     - sandbox
 
 - name: test su role with defaults
-  hosts: docker_sandbox_containers
+  hosts: vagrant_sandbox_vms
   vars:
   roles:
     - role: amtega.optimizations
@@ -32,11 +37,11 @@
   tags:
     - idempotence
 
-- name: cleanup docker docker sandbox
+- name: Cleanup vagrant sandbox
   hosts: localhost
   roles:
-    - role: amtega.docker_sandbox
-      docker_sandbox_state: absent
+    - role: amtega.vagrant_sandbox
+      vagrant_sandbox_state: absent
   tags:
     - cleanup
     - sandbox
