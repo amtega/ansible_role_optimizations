@@ -1,2 +1,6 @@
 ---
 # Role tasks
+- block:
+    - include_tasks: tuned.yml
+  tags:
+    - role::optimizations
