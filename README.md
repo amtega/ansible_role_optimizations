@@ -1,25 +1,16 @@
-# amtega.optimizations
+# Ansible optimizations role
 
-This is an [Ansible](http://www.ansible.com) role to configure some hernel optimizations to the vm.
+This is an [Ansible](http://www.ansible.com) role to configure some kernel optimizations.
+
 There are three way to perform this adjusts:
+
 - Adjust sysctl values.
-- Configure params on kernel modules.
-- Apply a profile of perfomance with tuned daemon
-
-## Requirements
-
-[Ansible 2.7+](http://docs.ansible.com/ansible/latest/intro_installation.html)
+- Configure kernel modules parameters.
+- Apply a perfomance profile with tuned daemon.
 
 ## Role Variables
 
 A list of all the default variables for this role is available in `defaults/main.yml`.
-
-## Dependencies
-
-- [amtega.check_platform](https://galaxy.ansible.com/amtega/check_platform)
-- [amtega.packages](https://galaxy.ansible.com/amtega/packages)
-- [amtega.sysctl](https://galaxy.ansible.com/amtega/sysctl)
-- [amtega.modprobe](https://galaxy.ansible.com/amtega/modprobe)
 
 ## Example Playbook
 
@@ -32,13 +23,13 @@ This is an example playbook:
   roles:
     - amtega.optimizations
   vars:
-    optimization_nfs: yes
+    optimizations_nfs: yes
     optimizations_nfs_module:
       - udp_slot_table_entries=64
       - tcp_slot_table_entries=128
       - tcp_max_slot_table_entries=128
 
-    optimization_tuned_activate: yes
+    optimizations_tuned_enabled: yes
     optimizations_tuned_profile: virtual-guest
 ```
 
@@ -55,7 +46,7 @@ $ ansible-playbook main.yml
 
 ## License
 
-Copyright (C) 2018 AMTEGA - Xunta de Galicia
+Copyright (C) 2019 AMTEGA - Xunta de Galicia
 
 This role is free software: you can redistribute it and/or modify it under the terms of:
 

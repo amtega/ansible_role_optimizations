@@ -1,7 +1,7 @@
 galaxy_info:
   role_name: optimizations
   author: José Enrique Mourón Regueira
-  description: Install and configure modules for rsyslog
+  description: Configure some hernel optimizations
   company: AMTEGA - Xunta de Galicia
   license: GPLv3 or EUPL
   min_ansible_version: 2.7
@@ -14,8 +14,12 @@ galaxy_info:
       versions:
         - 27
         - 28
+        - 29
   galaxy_tags:
     - kernel
+    - optimizations
+    - sysctl
+    - tuned
     - tuning
 
 dependencies:
@@ -35,24 +39,24 @@ dependencies:
   - role: amtega.sysctl
     vars:
       sysctl:
-        - name: memory sysctl optimizations
+        - name: Memory sysctl optimizations
           path: /etc/sysctl.d/90-memory_otimizations.conf
-          options: "{{ optimizations_sysctl_memory }}"
+          options: "{{ optimizations_memory_sysctl }}"
       sysctl_options_defaults:
         state: present
         reload: no
-    when: optimization_memory
+    when: optimizations_memory
 
   - role: amtega.sysctl
     vars:
       sysctl:
-        - name: disk sysctl optimizations
+        - name: Disk sysctl optimizations
           path: /etc/sysctl.d/91-disk_otimizations.conf
-          options: "{{ optimizations_sysctl_disk }}"
+          options: "{{ optimizations_disk_sysctl }}"
       sysctl_options_defaults:
         state: present
         reload: no
-    when: optimization_disk
+    when: optimizations_disk
 
   - role: amtega.modprobe
     vars:
@@ -61,4 +65,4 @@ dependencies:
         - name: sunrpc
           state: install
           options: "{{ optimizations_nfs_module }}"
-    when: optimization_nfs
+    when: optimizations_nfs
