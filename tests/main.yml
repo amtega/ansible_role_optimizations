@@ -9,7 +9,8 @@
         [? starts_with(name, `centos-6`)
            || starts_with(name, `centos-7`)
            || starts_with(name, `fedora-27`)
-           || starts_with(name, `fedora-28`) ]
+           || starts_with(name, `fedora-28`)
+           || starts_with(name, `fedora-29`) ]
   tags:
     - sandbox
 
@@ -21,14 +22,12 @@
   tags:
     - sandbox
 
-- name: test su role with defaults
+- name: Test optimizations role with defaults
   hosts: vagrant_sandbox_vms
-  vars:
   roles:
-    - role: amtega.optimizations
-      vars:
+    - amtega.optimizations
   tasks:
-    - name: check tuned test configuration
+    - name: Check tuned configuration
       command: tuned-adm active
       register: tuned_test_check
       changed_when: no

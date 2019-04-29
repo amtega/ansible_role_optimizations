@@ -1,6 +1,24 @@
 ---
 # Role tasks
+
 - block:
-    - include_tasks: tuned.yml
+    - name: Configure tuned service
+      service:
+        name: tuned
+        state: started
+        enabled: yes
+      when: optimizations_tuned_enabled
+
+    - name: Check tuned active profile
+      command: tuned-adm active
+      register: optimizations_check_profile_result
+      changed_when: no
+
+    - name: Activate tuned profile
+      command: "tuned-adm profile {{ optimizations_tuned_profile }}"
+      when: >-
+        optimizations_tuned_enabled
+        and not optimizations_check_profile_result.stdout
+                is search(optimizations_tuned_profile)
   tags:
     - role::optimizations
