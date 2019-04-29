@@ -10,7 +10,7 @@
       when: optimizations_tuned_enabled
 
     - name: Check tuned active profile
-      shell: tuned-adm active
+      command: tuned-adm active
       register: optimizations_check_profile_result
       changed_when: no
 
