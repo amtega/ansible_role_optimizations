@@ -10,12 +10,12 @@
       when: optimizations_tuned_enabled
 
     - name: Check tuned active profile
-      command: tuned-adm active
+      command: /usr/sbin/tuned-adm active
       register: optimizations_check_profile_result
       changed_when: no
 
     - name: Activate tuned profile
-      command: "tuned-adm profile {{ optimizations_tuned_profile }}"
+      command: "/usr/sbin/tuned-adm profile {{ optimizations_tuned_profile }}"
       when: >-
         optimizations_tuned_enabled
         and not optimizations_check_profile_result.stdout
