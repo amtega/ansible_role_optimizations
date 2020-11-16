@@ -1,0 +1,12 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Check tuned configuration
+    command: tuned-adm active
+    register: tuned_test_check
+    changed_when: no
+    failed_when: >-
+      not tuned_test_check.stdout is search(optimizations_tuned_profile)  
