@@ -43,20 +43,20 @@ platforms:
       - molecule_hosts
       - molecule_hosts_centos
       - molecule_hosts_centos_7
-  - name: "fedora29-${INSTANCE_UUID:-1}"
-    box: fedora/29-cloud-base
+  - name: "fedora32-${INSTANCE_UUID:-1}"
+    box: fedora/32-cloud-base
     memory: 1024
     groups:
       - molecule_hosts
       - molecule_hosts_fedora
-      - molecule_hosts_fedora_29
-  - name: "fedora30-${INSTANCE_UUID:-1}"
-    box: fedora/30-cloud-base
+      - molecule_hosts_fedora_32
+  - name: "fedora33-${INSTANCE_UUID:-1}"
+    box: fedora/33-cloud-base
     memory: 1024
     groups:
       - molecule_hosts
       - molecule_hosts_fedora
-      - molecule_hosts_fedora_30
+      - molecule_hosts_fedora_33
 provisioner:
   name: ansible
   config_options:
