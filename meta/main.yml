@@ -10,12 +10,11 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - 6
         - 7
     - name: Fedora
       versions:
-        - 29
-        - 30
+        - 32
+        - 33
   galaxy_tags:
     - kernel
     - optimizations
@@ -27,9 +26,9 @@ dependencies:
   - role: amtega.check_platform
     vars:
       check_platform_distributions:
-        centos: 6
-        fedora: 29
-        redhat: 6
+        centos: 7
+        fedora: 32
+        redhat: 7
 
   - role: amtega.packages
     packages_os:

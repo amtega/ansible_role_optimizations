@@ -1,0 +1,11 @@
+---
+
+- name: Prepare testing hosts
+  hosts: molecule_hosts_centos_6
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Setup python for ansible
+      package:
+        name: libselinux-python
+        state: present
