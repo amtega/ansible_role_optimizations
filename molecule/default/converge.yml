@@ -1,8 +1,7 @@
 ---
+
 - name: Converge
   hosts: molecule_hosts
   become: yes
-  tasks:
-    - name: "Include amtega.optimizations"
-      include_role:
-        name: "amtega.optimizations"
+  roles:
+    - amtega.optimizations
