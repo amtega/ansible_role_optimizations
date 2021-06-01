@@ -13,6 +13,7 @@
       command: /usr/sbin/tuned-adm active
       register: optimizations_check_profile_result
       changed_when: no
+      when: optimizations_tuned_enabled
 
     - name: Activate tuned profile
       command: "/usr/sbin/tuned-adm profile {{ optimizations_tuned_profile }}"
