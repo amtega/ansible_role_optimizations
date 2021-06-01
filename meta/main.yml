@@ -2,6 +2,7 @@
 
 galaxy_info:
   role_name: optimizations
+  namespace: amtega
   author: José Enrique Mourón Regueira
   description: Configure some hernel optimizations
   company: AMTEGA - Xunta de Galicia
