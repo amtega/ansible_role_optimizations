@@ -1,22 +1,23 @@
 ---
-# Role tasks
 
-- block:
+- name: Setup optimizations
+  block:
     - name: Configure tuned service
-      service:
+      ansible.builtin.service:
         name: tuned
         state: started
         enabled: yes
       when: optimizations_tuned_enabled
 
     - name: Check tuned active profile
-      command: /usr/sbin/tuned-adm active
+      ansible.builtin.command: /usr/sbin/tuned-adm active
       register: optimizations_check_profile_result
       changed_when: no
       when: optimizations_tuned_enabled
 
     - name: Activate tuned profile
-      command: "/usr/sbin/tuned-adm profile {{ optimizations_tuned_profile }}"
+      ansible.builtin.command: >-
+        /usr/sbin/tuned-adm profile {{ optimizations_tuned_profile }}
       when: >-
         optimizations_tuned_enabled
         and not optimizations_check_profile_result.stdout

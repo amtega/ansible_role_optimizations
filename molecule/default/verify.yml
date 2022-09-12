@@ -5,7 +5,7 @@
   hosts: all
   tasks:
     - name: Check tuned configuration
-      command: /usr/sbin/tuned-adm active
+      ansible.builtin.command: /usr/sbin/tuned-adm active
       register: tuned_test_check
       changed_when: no
       failed_when: >-
