@@ -6,6 +6,6 @@
   become: yes
   tasks:
     - name: Setup python for ansible
-      package:
+      ansible.builtin.package:
         name: libselinux-python
         state: present
